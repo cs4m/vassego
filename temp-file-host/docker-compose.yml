@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  filehost:
+    build: .
+    ports:
+      - "7300:3000"
+    volumes:
+      - filehost_uploads:/app/uploads
+    restart: unless-stopped
+
+volumes:
+  filehost_uploads:

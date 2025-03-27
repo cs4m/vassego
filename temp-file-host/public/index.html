@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Temp File Host</title>
+</head>
+<body>
+  <h2>Upload a file</h2>
+  <input type="file" id="file" />
+  <button onclick="upload()">Upload</button>
+  <p id="link"></p>
+
+  <script>
+    function upload() {
+      const fileInput = document.getElementById('file');
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      fetch('/upload', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('link').innerHTML = \`<a href="\${data.url}">\${data.url}</a>\`;
+      })
+      .catch(err => alert('Upload failed: ' + err));
+    }
+  </script>
+</body>
+</html>
